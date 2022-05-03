@@ -6,8 +6,11 @@
 
 1. ![Python 3.x](https://img.shields.io/pypi/pyversions/vk_api.svg) должен быть установлен.
 
-2. Скачайте ['scripts.py'](https://github.com/ruk228/db-hack), [БД](https://dvmn.org/filer/canonical/1562234129/166/), [Онлайн реподзиторий](https://github.com/devmanorg/e-diary/tree/master).
-
+2. Скачайте [БД](https://dvmn.org/filer/canonical/1562234129/166/) и с клонируйте два репозитория
+```bash
+git clone https://github.com/ruk228/db-hack 
+git clone https://github.com/devmanorg/e-diary/tree/master
+```
 3. Распакуйте файлы и закиньте их в одну папку.
 
 4. Зайдите в консоль и перейдите в каталог с файлом 'scripts.py'.
@@ -63,9 +66,9 @@ $ Скрипт сработал
 python manage.py runserver
 ```
 
-9. Зайдите в электронный дневник и првоерьте оценки.
+9. Зайдите в электронный дневник и проверьте оценки.
 
-### Ошибки в консоле # сделать выводом print в консоли
+### Возможные ошибки в консоли
 
 * `Имя не найдено.`
 
