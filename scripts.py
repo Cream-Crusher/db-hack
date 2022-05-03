@@ -7,15 +7,26 @@ from django.core.exceptions import ObjectDoesNotExist
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 django.setup()
 
-from datacenter.models import Commendation, Lesson, Schoolkid, Mark
+from datacenter.models import Commendation, Lesson, Schoolkid, Mark, Chastisement
 
 
 def fix_marks(schoolkid):
     Mark.objects.filter(schoolkid=schoolkid, points__lte=3).update(points=choice([4, 5]))
 
 
+def remove_chastisements(schoolkid):
+	chastisement = Chastisement.objects.filter(schoolkid=schoolkid)
+	chastisement.delete()
+
+
 def create_commendation(schoolkid, subject):
-    praise = ['Хвалю', 'Молодец', 'Так держать', 'Хорошо', 'Умничка']
+    praise = [
+	    'Хвалю',
+	    'Молодец',
+	    'Так держать',
+	    'Хорошо',
+	    'Умничка'
+    ]
     lesson = Lesson.objects.filter(
         year_of_study=schoolkid.year_of_study,
         group_letter=schoolkid.group_letter,
@@ -61,5 +72,6 @@ if __name__ == '__main__':
 
     if input() == 'y':
         fix_marks(schoolkid)
+        remove_chastisements(schoolkid)
         create_commendation(schoolkid, args.subject)
         print('Скрипт сработал')
