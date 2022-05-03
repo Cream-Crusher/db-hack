@@ -7,7 +7,11 @@ from django.core.exceptions import ObjectDoesNotExist
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 django.setup()
 
-from datacenter.models import Commendation, Lesson, Schoolkid
+from datacenter.models import Commendation, Lesson, Schoolkid, Mark
+
+
+def fix_marks(schoolkid):
+    Mark.objects.filter(schoolkid=schoolkid, points__lte=3).update(points=choice([4, 5]))
 
 
 def create_commendation(schoolkid, subject):
@@ -56,5 +60,6 @@ if __name__ == '__main__':
     print('Желаете продолжить? y/n')
 
     if input() == 'y':
+        fix_marks(schoolkid)
         create_commendation(schoolkid, args.subject)
         print('Скрипт сработал')
