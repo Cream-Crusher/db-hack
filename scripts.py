@@ -4,10 +4,10 @@ import argparse
 from random import choice
 from django.core.exceptions import ObjectDoesNotExist
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
-django.setup()
 
-from datacenter.models import Commendation, Lesson, Schoolkid, Mark, Chastisement
+def main():
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+    django.setup()
 
 
 def fix_marks(schoolkid):
@@ -15,26 +15,26 @@ def fix_marks(schoolkid):
 
 
 def remove_chastisements(schoolkid):
-	chastisement = Chastisement.objects.filter(schoolkid=schoolkid)
-	chastisement.delete()
+    chastisement = Chastisement.objects.filter(schoolkid=schoolkid)
+    chastisement.delete()
 
 
 def create_commendation(schoolkid, subject):
-    praise = [
-	    'Хвалю',
-	    'Молодец',
-	    'Так держать',
-	    'Хорошо',
-	    'Умничка'
+    praises = [
+        'Хвалю',
+        'Молодец',
+        'Так держать',
+        'Хорошо',
+        'Умничка'
     ]
     lesson = Lesson.objects.filter(
         year_of_study=schoolkid.year_of_study,
         group_letter=schoolkid.group_letter,
         subject__title=subject
-    ).first()
+    ).order_by('?').first()
 
     Commendation.objects.create(
-        text=choice(praise),
+        text=choice(praises),
         teacher=lesson.teacher,
         subject=lesson.subject,
         schoolkid=schoolkid,
@@ -66,6 +66,9 @@ def get_args():
 
 
 if __name__ == '__main__':
+    main()
+    from datacenter.models import Commendation, Lesson, Schoolkid, Mark, Chastisement
+
     args = get_args()
     schoolkid = check_name(args.name)
     print('Желаете продолжить? y/n')
