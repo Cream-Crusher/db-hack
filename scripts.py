@@ -5,9 +5,11 @@ from random import choice
 from django.core.exceptions import ObjectDoesNotExist
 
 
-def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
-    django.setup()
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+django.setup()
+
+
+from datacenter.models import Commendation, Lesson, Schoolkid, Mark, Chastisement
 
 
 def fix_marks(schoolkid):
@@ -66,9 +68,6 @@ def get_args():
 
 
 if __name__ == '__main__':
-    main()
-    from datacenter.models import Commendation, Lesson, Schoolkid, Mark, Chastisement
-
     args = get_args()
     schoolkid = check_name(args.name)
     print('Желаете продолжить? y/n')
